@@ -18,11 +18,11 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = () => {
-  signInWithPopup(auth, provider)
-    .then((results) => {
-      console.log(results);
-    }).catch((err) => {
-      console.log(err);
-    });
+
+export const signInWithGoogle = async () => {
+  try {
+    const results = await signInWithPopup(auth, provider);
+  } catch (error) {
+    console.error("Error signing in with Google:", error);
+  }
 };
