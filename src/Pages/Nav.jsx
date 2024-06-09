@@ -47,9 +47,9 @@ const Nav = () => {
             <span className="tooltip">Users</span>
           </li>
           <li>
-            <Link to="about">
+            <Link to="/crud/postPage">
               <i className='bx bx-chat'></i>
-              <span className="links_name">{isOpen && 'About'}</span>
+              <span className="links_name">{isOpen && 'Post Page'}</span>
             </Link>
             <span className="tooltip">About</span>
           </li>

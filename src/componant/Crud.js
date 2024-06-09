@@ -1,19 +1,39 @@
 import { useState } from 'react';
-import { addDoc, collection} from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+import { storage } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
 
 function Crud() {
   const [newPostTitle, setNewPostTitle] = useState("");
-  const [newPost, setNewPost] = useState("");
+  const [newPost, setNewPost] = useState(null);
+  const [loading, setLoading] = useState(false);
   const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
 
   const createUser = async () => {
-    await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: newPost });
-    navigate(`/crud/postPage`)
+    setLoading(true);
+    try {
+      const imgURL = await uploadImage();
+      await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: imgURL });
+      navigate(`/crud/postPage`);
+    } catch (error) {
+      console.error("Error creating user or uploading image: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const uploadImage = async () => {
+    if (newPost == null) return null;
+    const imgRef = ref(storage, `images/${newPost.name + v4()}`);
+    await uploadBytes(imgRef, newPost);
+    const imgURL = await getDownloadURL(imgRef);
+    return imgURL;
+  };
 
   return (
     <div className="app">
@@ -25,12 +45,14 @@ function Crud() {
           onChange={(e) => setNewPostTitle(e.target.value)}
         />
         <input
+          type='file'
           className="input-field"
           placeholder="Post..."
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
+          onChange={(e) => setNewPost(e.target.files[0])}
         />
-        <button className="create-button" onClick={createUser}>Upload</button>
+        <button className="create-button" onClick={createUser} disabled={loading}>
+          {"UPLOAD"}
+        </button>
       </div>
     </div>
   );

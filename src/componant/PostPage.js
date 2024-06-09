@@ -18,8 +18,8 @@ const PostPage = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "users", id);
     await deleteDoc(userDoc);
-    fetchUsers(); // Fetch users again to update the list
-  };
+    fetchUsers(); 
+  };    
 
   useEffect(() => {
     fetchUsers();
@@ -31,7 +31,7 @@ const PostPage = () => {
             {users.map((user) => (
             <div className="user-card" key={user.id}>
                 <h1 className="user-name">caption: {user.postTitle}</h1>
-                <h1 className="user-age">post: {user.post}</h1>
+                <img src={user.post} alt="" style={{height: "150px", width: "150px"}}/> <br />
                 <button className="update-button" onClick={() => navigate(`/crud/update/${user.id}`)}>Edit</button>
                 <button className="delete-button" onClick={() => deleteUser(user.id)}>Delete</button>
             </div>

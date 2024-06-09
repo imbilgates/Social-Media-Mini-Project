@@ -24,7 +24,7 @@ const Logout = () => {
     <div id="log_out">
       <button className='logout-button' onClick={logout} disabled={loading}>
         {loading ? (
-          <ReactLoading type={'spin'} color={"#ffffff"} height={20} width={20} />
+          <ReactLoading type={'spokes'} color={"#FF0000"} height={20} width={20} />
         ) : (
           <i className='bx bx-log-out'></i>
         )}
