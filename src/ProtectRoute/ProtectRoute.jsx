@@ -1,13 +1,12 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Register from '../componant/Register'
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectRoute = ({user}) => {
-  return (
-    <>
-    {user ? <Outlet /> : <Register />}    
-    </>
-  )
-}
+const ProtectRoute = ({ user }) => {
+  if (!user) {
+    return <Navigate to="/" />;
+  }
 
-export default ProtectRoute
+  return <Outlet />;
+};
+
+export default ProtectRoute;

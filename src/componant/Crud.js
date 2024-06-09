@@ -1,64 +1,38 @@
-import { useState, useEffect } from 'react';
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { addDoc, collection} from 'firebase/firestore';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 function Crud() {
-  const [newName, setNewName] = useState("");
-  const [newAge, setNewAge] = useState(0);
-  const [users, setUsers] = useState([]);
+  const [newPostTitle, setNewPostTitle] = useState("");
+  const [newPost, setNewPost] = useState("");
   const usersCollectionRef = collection(db, "users");
+  const navigate = useNavigate();
 
   const createUser = async () => {
-      await addDoc(usersCollectionRef, { name: newName, age: Number(newAge) });
+    await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: newPost });
+    navigate(`/crud/postPage`)
   };
 
-  const updateUser = async (id, age) => {
-      const userDoc = doc(db, "users", id);
-      const newFields = { age: age + 1 };
-      await updateDoc(userDoc, newFields);
-  };
-
-  const deleteUser = async (id) => {
-      const userDoc = doc(db, "users", id);
-      await deleteDoc(userDoc);
-  };
-
-  useEffect(() => {
-      const getUsers = async () => {
-          const data = await getDocs(usersCollectionRef);
-          setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      };
-      getUsers();
-}, [users, usersCollectionRef]);
 
   return (
-      <div className="app">
-          <div className="input-container">
-              <input
-                  className="input-field"
-                  placeholder="Name..."
-                  onChange={(e) => setNewName(e.target.value)}
-              />
-              <input
-                  className="input-field"
-                  type="number"
-                  placeholder="Age..."
-                  onChange={(e) => setNewAge(e.target.value)}
-              />
-              <button className="create-button" onClick={createUser}>Create User</button>
-          </div>
-
-          <div className="user-list">
-              {users.map((user) => (
-                  <div className="user-card" key={user.id}>
-                      <h1 className="user-name">Name: {user.name}</h1>
-                      <h1 className="user-age">Age: {user.age}</h1>
-                      <button className="update-button" onClick={() => updateUser(user.id, user.age)}>Increase Age</button>
-                      <button className="delete-button" onClick={() => deleteUser(user.id)}>Delete User</button>
-                  </div>
-              ))}
-          </div>
+    <div className="app">
+      <div className="input-container">
+        <input
+          className="input-field"
+          placeholder="PostTitle..."
+          value={newPostTitle}
+          onChange={(e) => setNewPostTitle(e.target.value)}
+        />
+        <input
+          className="input-field"
+          placeholder="Post..."
+          value={newPost}
+          onChange={(e) => setNewPost(e.target.value)}
+        />
+        <button className="create-button" onClick={createUser}>Upload</button>
       </div>
+    </div>
   );
 }
 

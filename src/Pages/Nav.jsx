@@ -33,16 +33,16 @@ const Nav = () => {
             <span className="tooltip">Search</span>
           </li>
           <li>
-            <Link to="empty">
+            <Link to="Home">
               <i className='bx bx-grid-alt'></i>
               <span className="links_name">{isOpen && 'Home'}</span>
             </Link>
             <span className="tooltip">Home</span>
           </li>
           <li>
-            <Link to="Home">
+            <Link to="crud">
               <i className='bx bx-user'></i>
-              <span className="links_name">{isOpen && 'Users'}</span>
+              <span className="links_name">{isOpen && 'Add Post'}</span>
             </Link>
             <span className="tooltip">Users</span>
           </li>
