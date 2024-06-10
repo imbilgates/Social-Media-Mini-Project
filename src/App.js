@@ -5,7 +5,7 @@ import Home from './Pages/Home';
 import './App.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'; // Ensure you import Navigate
+import { Routes, Route, Navigate } from 'react-router-dom'; 
 import ProtectRoute from './ProtectRoute/ProtectRoute';
 import Nav from './Pages/Nav';
 import About from './Pages/About';
