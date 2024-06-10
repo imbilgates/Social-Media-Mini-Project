@@ -12,9 +12,9 @@ import About from './Pages/About';
 import Help from './Pages/Help';
 import AddPost from './Pages/AddPost';
 import Search from './Pages/Search';
-import { navContext } from './context/NavContexts';
 import Update from './componant/Update';
 import PostPage from './componant/PostPage';
+import { UserContext } from './context/UserContext'; 
 
 function App() {
   const [user, setUser] = useState(null);
@@ -34,10 +34,9 @@ function App() {
   }
 
   return (
-    <>
-      <navContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user }}> 
+
         <Nav />
-      </navContext.Provider>
 
       <Routes>
         <Route path="/" element={!user ? <Register /> : <Navigate to="/home" />} />
@@ -56,7 +55,7 @@ function App() {
           <Route path="/help" element={<Help />} />
         </Route>
       </Routes>
-    </>
+    </UserContext.Provider>
   );
 }
 

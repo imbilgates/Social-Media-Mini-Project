@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import Logout from '../auth/Logout';
 import logo from '../assets/img/default-img.jpg';
 import { useContext } from 'react';
-import { navContext } from '../context/NavContexts';
+import { UserContext } from '../context/UserContext';
 import React, { useState } from 'react';
 import 'boxicons/css/boxicons.min.css';
 
 const Nav = () => {
-  const { user } = useContext(navContext);
+  const { user } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -34,28 +34,28 @@ const Nav = () => {
           </li>
           <li>
             <Link to="Home">
-              <i className='bx bx-grid-alt'></i>
+             <i class='bx bxs-home-heart'></i>
               <span className="links_name">{isOpen && 'Home'}</span>
             </Link>
             <span className="tooltip">Home</span>
           </li>
           <li>
             <Link to="crud">
-              <i className='bx bx-user'></i>
+              <i class='bx bxs-add-to-queue'></i>
               <span className="links_name">{isOpen && 'Add Post'}</span>
             </Link>
-            <span className="tooltip">Users</span>
+            <span className="tooltip">Add Post</span>
           </li>
           <li>
             <Link to="/crud/postPage">
-              <i className='bx bx-chat'></i>
+              <i class='bx bx-list-ul'></i>
               <span className="links_name">{isOpen && 'Post Page'}</span>
             </Link>
-            <span className="tooltip">About</span>
+            <span className="tooltip">Post Page</span>
           </li>
           <li>
             <Link to="help">
-              <i className='bx bx-chat'></i>
+              <i class='bx bxs-message-dots'></i>
               <span className="links_name">{isOpen && 'Help'}</span>
             </Link>
             <span className="tooltip">Help</span>
