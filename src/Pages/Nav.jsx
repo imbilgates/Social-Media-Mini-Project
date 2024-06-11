@@ -38,6 +38,12 @@ const Nav = () => {
               <span className="links_name">{isOpen && 'Home'}</span>
             </Link>
             <span className="tooltip">Home</span>
+          </li>          <li>
+            <Link to="Profile">
+             <i class='bx bxs-user'></i>
+              <span className="links_name">{isOpen && 'My Profile'}</span>
+            </Link>
+            <span className="tooltip">Profile</span>
           </li>
           <li>
             <Link to="crud">

@@ -15,6 +15,7 @@ import Search from './Pages/Search';
 import Update from './componant/Update';
 import PostPage from './componant/PostPage';
 import { UserContext } from './context/UserContext'; 
+import UserProfile from './componant/UserProfile';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -46,6 +47,8 @@ function App() {
             <Route path="search" element={<Search />} />
             <Route path="addPost" element={<AddPost />} />
           </Route>
+
+          <Route path="/Profile" element={<UserProfile />} />
           
           <Route path="/crud" element={<Crud />} />
           <Route path="/crud/update/:id" element={<Update />} />
@@ -55,6 +58,7 @@ function App() {
           <Route path="/help" element={<Help />} />
         </Route>
       </Routes>
+      
     </UserContext.Provider>
   );
 }

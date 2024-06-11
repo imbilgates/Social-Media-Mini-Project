@@ -46,7 +46,7 @@ const PostPage = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [users]);
 
   if (loading) {
     return <div>Loading...</div>;
