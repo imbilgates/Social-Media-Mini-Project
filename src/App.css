@@ -713,8 +713,6 @@ nav a:hover {
     cursor: not-allowed;
   }
 }
-/* UserProfile*/
-
 .user-profile {
   max-width: 800px;
   margin: 0 auto;
@@ -752,6 +750,13 @@ nav a:hover {
 .post-card {
   position: relative;
   overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.post-card:hover {
+  transform: scale(1.05);
 }
 
 .post-image {
@@ -777,30 +782,31 @@ nav a:hover {
 
 .post-actions {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: none;
-  gap: 10px;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
 }
 
 .post-card:hover .post-actions {
   display: flex;
 }
 
-.edit-icon {
+.edit-icon, .delete-icon {
   cursor: pointer;
   font-size: 24px;
-  color: rgb(0, 0, 0);
-}
-.delete-icon{
-  cursor: pointer;
-  font-size: 24px;
-  color: rgb(255, 0, 0);
+  color: white;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .edit-icon:hover, .delete-icon:hover {
-  color: #f0f0f0;
+  color: #57f7ff;
+  text-shadow: 0 0 10px #57f7ff, 0 0 20px #57f7ff, 0 0 30px #57f7ff;
 }
+/*  */
 
 
 

@@ -64,23 +64,6 @@ const PostPage = () => {
             <p>@{post.userName}</p>
             <h1 className="user-name">caption: {post.postTitle}</h1>
             <img src={post.post} alt="" style={{ height: '150px', width: '150px' }} />
-            <br />
-            {post.userEmail === user.email && (
-              <>
-                <button
-                  className="update-button"
-                  onClick={() => navigate(`/crud/update/${post.id}`)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="delete-button"
-                  onClick={() => deleteUser(post.id, post.post)}
-                >
-                  Delete
-                </button>
-              </>
-            )}
           </div>
         ))}
       </div>
