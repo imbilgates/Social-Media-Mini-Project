@@ -60,7 +60,7 @@ const Update = () => {
       const userDoc = doc(db, "users", id);
       const updatedPost = { postTitle: editedTitle, post: imgURL };
       await updateDoc(userDoc, updatedPost);
-      navigate(`/crud/postPage`);
+      navigate(`/Profile`);
     } catch (error) {
       console.error("Error updating user or uploading image: ", error);
     } finally {

@@ -22,7 +22,7 @@ function Crud() {
     try {
       const imgURL = await uploadImage();
       await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: imgURL, userEmail: user?.email, userName: user?.displayName});
-      navigate(`/crud/postPage`);
+      navigate(`/Home`);
     } catch (error) {
       console.error("Error creating user or uploading image: ", error);
     } finally {
