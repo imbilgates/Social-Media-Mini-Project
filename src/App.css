@@ -1,4 +1,7 @@
 .App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -800,14 +803,39 @@ nav a:hover {
   font-size: 24px;
   color: white;
   transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 0 10px #57ffbf, 0 0 20px #57ffbf, 0 0 30px #57ffbf;
 }
 
 .edit-icon:hover, .delete-icon:hover {
   color: #57f7ff;
   text-shadow: 0 0 10px #57f7ff, 0 0 20px #57f7ff, 0 0 30px #57f7ff;
 }
-/*  */
+/* model  */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.modal-content {
+  background: rgb(0, 0, 0);
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.modal-content input {
+  margin-bottom: 10px;
+}
 
-
+.modal-content button {
+  padding: 10px 20px;
+}

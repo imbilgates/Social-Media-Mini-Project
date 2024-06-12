@@ -13,7 +13,6 @@ import Help from './Pages/Help';
 import AddPost from './Pages/AddPost';
 import Search from './Pages/Search';
 import Update from './componant/Update';
-import PostPage from './componant/PostPage';
 import { UserContext } from './context/UserContext'; 
 import UserProfile from './componant/UserProfile';
 
@@ -28,14 +27,14 @@ function App() {
       console.log(currentUser);
     });
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <UserContext.Provider value={{ user }}> 
+    <UserContext.Provider value={{ user, setUser  }}> 
 
         <Nav />
 
@@ -52,7 +51,6 @@ function App() {
           
           <Route path="/crud" element={<Crud />} />
           <Route path="/crud/update/:id" element={<Update />} />
-          <Route path="/crud/postPage" element={<PostPage />} />
           
           <Route path="/about" element={<About />} />
           <Route path="/help" element={<Help />} />

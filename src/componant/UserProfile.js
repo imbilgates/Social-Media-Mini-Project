@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { auth, db, storage } from '../firebase';
 import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
-import { deleteObject, ref } from 'firebase/storage';
+import { deleteObject, ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/img/default-img.jpg';
+import { UserContext } from '../context/UserContext';
 
 const UserProfile = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [username, setUsername] = useState(auth.currentUser.displayName);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [previewPhoto, setPreviewPhoto] = useState(null);
 
     const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
 
     const fetchUsers = async () => {
         try {
@@ -27,19 +34,59 @@ const UserProfile = () => {
 
     const deleteUser = async (id, postUrl) => {
         try {
-            // Delete the image from Firebase Storage
             const imageRef = ref(storage, postUrl);
             await deleteObject(imageRef);
 
-            // Delete the Firestore document
             const userDoc = doc(db, 'users', id);
             await deleteDoc(userDoc);
 
-            // Refetch users
             fetchUsers();
         } catch (err) {
             console.error('Error deleting user:', err);
             setError('Failed to delete user');
+        }
+    };
+
+    const handleSubmit = async () => {
+        try {
+            if (username.trim() !== "") {
+                let photoURL = auth.currentUser.photoURL; // Default to current photo URL
+                if (previewPhoto) {
+                    // Upload the image to Firebase Storage
+                    const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}`);
+                    const snapshot = await uploadString(storageRef, previewPhoto, 'data_url');
+    
+                    // Get the download URL of the uploaded image
+                    photoURL = await getDownloadURL(snapshot.ref);
+                }
+    
+                await updateProfile(auth.currentUser, {
+                    displayName: username,
+                    photoURL: photoURL
+                });
+                setUser({ ...user, photoURL: photoURL });
+                console.log('Profile updated successfully');
+                setIsModalOpen(false); // Close the modal on successful update
+            } else {
+                console.error('Username cannot be empty');
+                setError('Username cannot be empty');
+            }
+        } catch (err) {
+            console.error('Error updating profile:', err);
+            setError('Failed to update profile');
+        }
+    };
+    
+    
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewPhoto(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -60,13 +107,16 @@ const UserProfile = () => {
             <div className="user-profile">
                 <div className="profile-header">
                     <img
-                        src={auth.currentUser.photoURL}
+                        src={previewPhoto || auth.currentUser.photoURL || logo}
                         className="profile-picture"
                         alt=""
                     />
                     <div className="profile-info">
                         <p className="profile-email">{auth.currentUser.email}</p>
-                        <p className="profile-name">{auth.currentUser.displayName}</p>
+                        <p className="profile-name">
+                            {auth.currentUser.displayName}
+                            <i className="bx bx-edit edit-icon" onClick={() => setIsModalOpen(true)}></i>
+                        </p>
                     </div>
                 </div>
                 <div className="post-grid">
@@ -90,6 +140,24 @@ const UserProfile = () => {
                     ))}
                 </div>
             </div>
+
+            {isModalOpen && (
+                <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                        />
+                        <input
+                            placeholder="type your @username.."
+                            value={auth.currentUser.displayName || username} 
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <button className='submit' onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 };
