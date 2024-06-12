@@ -10,8 +10,6 @@ const PostPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
-  const { user } = useContext(UserContext);
 
   const fetchUsers = async () => {
     try {
@@ -26,23 +24,6 @@ const PostPage = () => {
     }
   };
 
-  const deleteUser = async (id, postUrl) => {
-    try {
-      // Delete the image from Firebase Storage
-      const imageRef = ref(storage, postUrl);
-      await deleteObject(imageRef);
-
-      // Delete the Firestore document
-      const userDoc = doc(db, 'users', id);
-      await deleteDoc(userDoc);
-
-      // Refetch users
-      fetchUsers();
-    } catch (err) {
-      console.error('Error deleting user:', err);
-      setError('Failed to delete user');
-    }
-  };
 
   useEffect(() => {
     fetchUsers();
