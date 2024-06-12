@@ -1,9 +1,6 @@
-import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { db, storage } from '../firebase';
-import { ref, deleteObject } from 'firebase/storage';
-import { UserContext } from '../context/UserContext';
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase';
 
 const PostPage = () => {
   const [users, setUsers] = useState([]);
