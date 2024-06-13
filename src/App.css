@@ -1,7 +1,5 @@
 .App {
-  max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,6 +7,7 @@
   background-color: #e3e3e374;
   text-align: center;
 }
+
 .Home{
   display: block;
   justify-content: center;
@@ -201,8 +200,86 @@
   cursor: not-allowed;
 }
 
+/* home post page */
+.App {
+  padding: 20px;
+  background-color: #f0f2f5;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.user-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.user-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
+  width: 100%;
+  max-width: 350px;
+}
+
+.user-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-profile-pic {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  margin-right: 15px;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.post-title {
+  font-size: 1.25rem;
+  color: #555;
+  padding: 15px;
+}
+
+
 
 /* post page */
+.user-card {
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.user-card:hover {
+  transform: scale(1.05);
+}
+
+.blurred {
+  filter: blur(4px);
+  transition: filter 0.3s ease;
+}
 
 .App {
   display: flex;

@@ -125,6 +125,7 @@ const UserProfile = () => {
                             <img src={post.post} alt="" className="post-image" />
                             <div className="post-info">
                                 <p className="post-caption">Caption: {post.postTitle}</p>
+                                <i class="bx bxs-heart" >{post.likes}</i>
                             </div>
                             <div className="post-actions">
                                 <i
@@ -151,7 +152,7 @@ const UserProfile = () => {
                         />
                         <input
                             placeholder="type your @username.."
-                            value={auth.currentUser.displayName || username} 
+                            value={auth.currentUser.displayName} 
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <button className='submit' onClick={handleSubmit}>Submit</button>

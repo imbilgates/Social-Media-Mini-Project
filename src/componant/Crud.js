@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -14,14 +14,14 @@ function Crud() {
   const usersCollectionRef = collection(db, "users");
 
   const navigate = useNavigate();
-  const  { user } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
 
   const createUser = async () => {
     setLoading(true);
     try {
       const imgURL = await uploadImage();
-      await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: imgURL, userEmail: user?.email, userName: user?.displayName});
+      await addDoc(usersCollectionRef, { postTitle: newPostTitle, post: imgURL, userEmail: user?.email, userName: user?.displayName });
       navigate(`/Home`);
     } catch (error) {
       console.error("Error creating user or uploading image: ", error);
