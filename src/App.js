@@ -39,7 +39,7 @@ function App() {
         <Nav />
 
       <Routes>
-        <Route path="/" element={!user ? <Register /> : <Navigate to="/home" />} />
+        <Route path="*" element={!user ? <Register /> : <Navigate to="/home" />} />
         
         <Route element={<ProtectRoute user={user} />}>
           <Route path="/home" element={<Home />}>
