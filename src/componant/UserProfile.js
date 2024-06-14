@@ -139,6 +139,7 @@ const UserProfile = () => {
                     ))}
                 </div>
             </div>
+            
 
             {isModalOpen && (
                 <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>

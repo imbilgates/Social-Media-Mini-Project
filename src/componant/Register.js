@@ -27,7 +27,7 @@ const Register = () => {
 
 
   return (
-    <div className="App">
+    <div className="Home">
       <AuthContexts.Provider value={obj}>
         {isClicked ? <Signup /> : <Login />}
       </AuthContexts.Provider>
