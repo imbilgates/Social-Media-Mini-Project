@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -7,7 +7,7 @@ const Comments = ({ postId, currentUser }) => {
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
 
-  const fetchComments = useCallback(async () => {
+  const fetchComments = async () => {
     try {
       const commentsCollectionRef = collection(db, 'users', postId, 'comments');
       const data = await getDocs(commentsCollectionRef);
@@ -15,21 +15,40 @@ const Comments = ({ postId, currentUser }) => {
     } catch (err) {
       console.error('Error fetching comments:', err);
     }
-  }, [postId]); // Added postId as a dependency
+  };
 
   const postComment = async () => {
-    // Remaining code for posting a comment
+    try {
+      if (newComment.trim() === '') return;
+      const commentsCollectionRef = collection(db, 'users', postId, 'comments');
+      await addDoc(commentsCollectionRef, {
+        text: newComment,
+        userId: currentUser.uid,
+        userName: currentUser.displayName,
+        timestamp: new Date(),
+      });
+      setNewComment('');
+      fetchComments();
+    } catch (err) {
+      console.error('Error posting comment:', err);
+    }
   };
 
   const deleteComment = async (commentId) => {
-    // Remaining code for deleting a comment
+    try {
+      const commentDocRef = doc(db, 'users', postId, 'comments', commentId);
+      await deleteDoc(commentDocRef);
+      fetchComments();
+    } catch (err) {
+      console.error('Error deleting comment:', err);
+    }
   };
 
   useEffect(() => {
     if (showComments) {
       fetchComments();
     }
-  }, [showComments, fetchComments]); 
+  }, [showComments, fetchComments]);
 
   return (
     <div className="comment-section">
