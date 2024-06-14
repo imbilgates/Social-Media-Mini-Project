@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -7,7 +7,7 @@ const Comments = ({ postId, currentUser }) => {
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const commentsCollectionRef = collection(db, 'users', postId, 'comments');
       const data = await getDocs(commentsCollectionRef);
@@ -15,7 +15,7 @@ const Comments = ({ postId, currentUser }) => {
     } catch (err) {
       console.error('Error fetching comments:', err);
     }
-  };
+  }, [postId]); // Add postId as a dependency
 
   const postComment = async () => {
     try {
@@ -48,7 +48,7 @@ const Comments = ({ postId, currentUser }) => {
     if (showComments) {
       fetchComments();
     }
-  }, [showComments, fetchComments]);
+  }, [showComments, fetchComments]); // Add fetchComments to the dependency array
 
   return (
     <div className="comment-section">
