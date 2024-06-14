@@ -5,9 +5,9 @@ import { UserContext } from '../context/UserContext';
 import Heart from "react-animated-heart";
 import Comments from '../componant/Comments';
 
+
 const Home = () => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useContext(UserContext);
 
@@ -20,7 +20,6 @@ const Home = () => {
       console.error('Error fetching users:', err);
       setError('Failed to fetch users');
     } finally {
-      setLoading(false);
     }
   };
 
@@ -55,10 +54,6 @@ const Home = () => {
     fetchUsers();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -75,7 +70,7 @@ const Home = () => {
               key={post.id}
             >
               <p>@{post.userName}</p>
-              <img src={post.post} alt="" style={{height: "300px", width: "300px"}} />
+              <img src={post.post} alt="" style={{ height: "300px", width: "300px" }} />
               <p><b>Title: {post.postTitle}</b></p>
               <div className="like-section">
                 <Heart
@@ -84,7 +79,7 @@ const Home = () => {
                   onClick={() => toggleLike(post.id)}
                   className="like-icon"
                 />
-                <p>{post.likes} Likes{post.likedBy.map(likedUser => likedUser === user.uid ? " you and others" : "")}</p>
+                <p>{post?.likes} Likes{post.likedBy?.map(likedUser => likedUser === user.uid ? " you and others" : "")}</p>
               </div>
               <Comments postId={post.id} currentUser={user} />
             </div>
