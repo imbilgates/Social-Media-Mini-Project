@@ -55,11 +55,11 @@ const UserProfile = () => {
                     // Upload the image to Firebase Storage
                     const storageRef = ref(storage, `profile_images/${auth.currentUser.uid}`);
                     const snapshot = await uploadString(storageRef, previewPhoto, 'data_url');
-    
+
                     // Get the download URL of the uploaded image
                     photoURL = await getDownloadURL(snapshot.ref);
                 }
-    
+
                 await updateProfile(auth.currentUser, {
                     displayName: username,
                     photoURL: photoURL
@@ -76,8 +76,8 @@ const UserProfile = () => {
             setError('Failed to update profile');
         }
     };
-    
-    
+
+
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -123,10 +123,8 @@ const UserProfile = () => {
                     {users.map((post) => (
                         <div className="post-card" key={post.id}>
                             <img src={post.post} alt="" className="post-image" />
-                            <div className="post-info">
-                                <p className="post-caption">Caption: {post.postTitle}</p>
-                                <i class="bx bxs-heart" >{post.likes}</i>
-                            </div>
+                            <p className="post-caption">{post.postTitle}
+                            <i class="bx bxs-heart" >{post.likes}</i></p>
                             <div className="post-actions">
                                 <i
                                     className="bx bx-edit edit-icon"
@@ -152,7 +150,7 @@ const UserProfile = () => {
                         />
                         <input
                             placeholder="type your @username.."
-                            value={auth.currentUser.displayName} 
+                            value={auth.currentUser.displayName}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <button className='submit' onClick={handleSubmit}>Submit</button>
