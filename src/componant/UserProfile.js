@@ -151,7 +151,7 @@ const UserProfile = () => {
                         />
                         <input
                             placeholder="type your @username.."
-                            value={auth.currentUser.displayName}
+                            value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <button className='submit' onClick={handleSubmit}>Submit</button>
