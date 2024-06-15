@@ -4,7 +4,6 @@ import { db } from '../firebase';
 import { UserContext } from '../context/UserContext';
 import Heart from "react-animated-heart";
 import Comments from '../componant/Comments';
-import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Home = () => {
