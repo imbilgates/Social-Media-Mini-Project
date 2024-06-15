@@ -841,11 +841,10 @@
 .logout-button {
   background: none;
   border: none;
-  padding-right: 100px;
+  padding-right: 70px;
+  padding-top: 30px;
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .logout-button:disabled {
@@ -855,4 +854,11 @@
 .bx-log-out {
   font-size: 20px;
   color: #ffffff;
+}
+.user-info-nav{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 600px;
 }

@@ -36,9 +36,13 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item profile">
-            <img src={user.photoURL} alt="" style={{height: "40px", width: "40px", borderRadius: "40px"}} />
-            <b>{user.email}</b>
-            <Logout />
+            <div className="user-info">
+              <img className='user-img' src={user.photoURL} alt="" style={{height: "40px", width: "40px", borderRadius: "40px"}} />
+              <b className='username'>{user.displayName}</b>
+            </div>
+            <div className="logout">
+              <Logout />
+            </div>
           </li>
         </ul>
       </nav>
