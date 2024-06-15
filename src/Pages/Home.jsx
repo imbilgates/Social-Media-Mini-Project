@@ -59,7 +59,7 @@ const Home = () => {
   }
 
   return (
-    <div className="home App">
+    <div className="Home">
       <div className="user-list">
         {users.map((post) => {
           const isLiked = post.likedBy && post.likedBy.includes(user.uid);
@@ -70,18 +70,20 @@ const Home = () => {
               key={post.id}
             >
               <p>@{post.userName}</p>
-              <img src={post.post} alt="" style={{ height: "300px", width: "300px" }} />
-              <p><b>Title: {post.postTitle}</b></p>
-              <div className="like-section">
-                <Heart
-                  id={post.postId}
-                  isClick={isLiked}
-                  onClick={() => toggleLike(post.id)}
-                  className="like-icon"
-                />
-                <p>{post?.likes} Likes{post.likedBy?.map(likedUser => likedUser === user.uid ? " you and others" : "")}</p>
+              <img src={post.post} alt="" className="post-image" />
+              <div className="post-content">
+                <p><b>Title: {post.postTitle}</b></p>
+                <div className="like-section">
+                  <Heart
+                    id={post.postId}
+                    isClick={isLiked}
+                    onClick={() => toggleLike(post.id)}
+                    className="like-icon"
+                  />
+                  {post.likes} Likes
+                </div>
+                <Comments postId={post.id} currentUser={user} />
               </div>
-              <Comments postId={post.id} currentUser={user} />
             </div>
           );
         })}

@@ -122,9 +122,9 @@ const UserProfile = () => {
                 <div className="post-grid">
                     {users.map((post) => (
                         <div className="post-card" key={post.id}>
-                            <img src={post.post} alt="" className="post-image" />
-                            <p className="post-caption">{post.postTitle}
-                            <i class="bx bxs-heart" >{post.likes}</i></p>
+                            <b className="post-caption">{post.postTitle}</b>
+                            <img src={post.post} alt="" className="post-image-use" />
+                            {/* <i class="bx bxs-heart" >{post.likes}</i> */}
                             <div className="post-actions">
                                 <i
                                     className="bx bx-edit edit-icon"

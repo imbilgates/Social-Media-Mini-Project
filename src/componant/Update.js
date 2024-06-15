@@ -76,7 +76,7 @@ const Update = () => {
   };
 
   return (
-    <div className='App'>
+    <div className='Home'>
       <div className="input-container">
         {editedPost && <img src={editedPost} alt="Post" style={{ height: '150px', width: '150px', marginBottom: '10px' }} />}
         <input
