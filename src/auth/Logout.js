@@ -21,15 +21,16 @@ const Logout = () => {
   };
 
   return (
-    <div id="log_out">
-      <button className='logout-button' onClick={logout} disabled={loading}>
-        {loading ? (
-          <ReactLoading type={'spokes'} color={"#FF0000"} height={20} width={20} />
-        ) : (
-          <i className='bx bx-log-out'></i>
-        )}
-      </button>
-    </div>
+<div className="container">
+  <button className="log-out" onClick={logout} disabled={loading}>
+    {loading ? (
+      <ReactLoading type={'spokes'} color={"#FF0000"} height={20} width={20} />
+    ) : (
+      <span>Logout</span>
+    )}
+  </button>
+</div>
+
   );
 };
 

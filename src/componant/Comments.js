@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const Comments = ({ postId, currentUser }) => {
+const Comments = ({ postId, currentUser, commentsCount, setCommentsCount }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
@@ -12,10 +12,11 @@ const Comments = ({ postId, currentUser }) => {
       const commentsCollectionRef = collection(db, 'users', postId, 'comments');
       const data = await getDocs(commentsCollectionRef);
       setComments(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setCommentsCount(data.size); // Update the comments count
     } catch (err) {
       console.error('Error fetching comments:', err);
     }
-  }, [postId]); // Add postId as a dependency
+  }, [postId, setCommentsCount]);
 
   const postComment = async () => {
     try {
@@ -48,14 +49,16 @@ const Comments = ({ postId, currentUser }) => {
     if (showComments) {
       fetchComments();
     }
-  }, [showComments, fetchComments]); // Add fetchComments to the dependency array
+  }, [showComments, fetchComments]);
 
   return (
     <div className="comment-section">
       <i
         className="bx bxs-chat comment-toggle-icon"
         onClick={() => setShowComments(!showComments)}
-      ></i>
+      >
+        Comments({commentsCount})
+      </i>
       {showComments && (
         <>
           <div className="comments">

@@ -14,7 +14,7 @@ const Account = ({ user }) => {
                 style={{ height: "40px", width: "40px", borderRadius: "40px" }} 
             />
             <div className={`dropdown ${isShowing ? 'show' : ''}`}>
-                <b className="username">{user.displayName}</b>
+                <p className="username">{user.displayName}</p>
                 <Logout />
             </div>
         </div>
