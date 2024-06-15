@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import Logout from '../auth/Logout';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import 'boxicons/css/boxicons.min.css';
+import Account from '../componant/Account';
 
 const Nav = () => {
   const { user } = useContext(UserContext);
@@ -36,13 +36,7 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item profile">
-            <div className="user-info">
-              <img className='user-img' src={user.photoURL} alt="" style={{height: "40px", width: "40px", borderRadius: "40px"}} />
-              <b className='username'>{user.displayName}</b>
-            </div>
-            <div className="logout">
-              <Logout />
-            </div>
+            <Account user={user} />
           </li>
         </ul>
       </nav>
