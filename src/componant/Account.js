@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Logout from '../auth/Logout';
 
 const Account = ({ user }) => {
-    const [isShowing, setIsShowing] = useState(false);
-
     return (
-        <div className="user-info">
-            <img 
-                onClick={() => setIsShowing(!isShowing)} 
-                className="user-img" 
-                src={user.photoURL} 
-                alt="" 
-                style={{ height: "40px", width: "40px", borderRadius: "40px" }} 
-            />
-            <div className={`dropdown ${isShowing ? 'show' : ''}`}>
-                <p className="username">{user.displayName}</p>
+        <div className="account-container">
+            <div className="user-info">
+                <img
+                    src={user?.photoURL}
+                    alt=''
+                    className="user-photo"
+                />
+                <span>@{user?.displayName}</span>
                 <Logout />
             </div>
         </div>

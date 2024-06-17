@@ -1,4 +1,7 @@
 
+#root{
+  background-color: #ffffff;
+}
 .Home{
   margin-top: 120px;
   justify-content: center;
@@ -386,18 +389,6 @@
   height: 50px;
 }
 
-/* Styling for the user information container */
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-right: 100px;
-}
-
-/* Bold user name */
-.user-info b {
-  font-weight: bold;
-}
 
 
 /* google login*/
@@ -757,8 +748,27 @@
   }
 }
 
+/* For iPad devices in portrait mode */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* For iPad devices in landscape mode */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .user-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
 /* For desktops */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 1025px) {
   .user-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -766,7 +776,6 @@
   }
 }
 
-/* nav */
 /* Nav.css */
 .nav {
   background-color: #28f0aa;
@@ -780,6 +789,11 @@
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav.hidden {
+  transform: translateY(-100%);
 }
 
 .nav-list {
@@ -829,11 +843,17 @@
   text-decoration: none;
 }
 
+.logout:hover {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 0 10px #ff5757, 0 0 20px #ff5757, 0 0 30px #ff5757;
+}
+
 @media (min-width: 600px) {
   .nav-link span {
     display: inline;
   }
 }
+
 /* log-out */
 .logout-button {
   background: none;
@@ -848,7 +868,7 @@
 
 .bx-log-out {
   font-size: 20px;
-  color: #ffffff;
+  color: #ff5555;
 }
 .user-info-nav{
   position: relative;
@@ -856,76 +876,42 @@
   align-items: center;
   gap: 10px;
 }
-/* Account */
-.user-info {
-  position: relative;
-  display: inline-block;
-}
+/* Account.css */
 
-.user-img {
-  cursor: pointer;
-}
-
-.dropdown {
-  display: block;
-  color: #fff;
-  position: absolute;
-  top: 50px; /* Adjust this value based on the height of your image */
-  left: 0;
-  background-color: rgb(8, 57, 71);
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  z-index: 1000;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.dropdown.show {
-  opacity: 1;
-  transform: translateY(0);
-  margin: auto;
-}
-/* logout */
-/* Style for the container div */
-.container {
+.account-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+}
+
+.user-info {
+  margin-right: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.user-photo {
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  margin-left: 10px; /* Adds space between the displayName and the image */
+  margin-right: 10px; /* Adds space between the image and the Logout button */
 }
 
 /* Style for the logout button */
 .log-out {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #007BFF; /* Primary color */
-  color: #FFFFFF; /* Text color */
+  background: none;
+  color: #a90e0e; /* Text color */
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
 }
 
-.log-out:disabled {
-  background-color: #A9A9A9; /* Disabled state color */
-  cursor: not-allowed;
-}
 
 .log-out span {
   margin-left: 10px; /* Margin to separate text from the loading icon */
 }
 
-/* Optional: Hover effect */
-.log-out:not(:disabled):hover {
-  background-color: #0056b3; /* Darker shade for hover */
-}
 .username{
   display: inline;
-  width: 100vh;
 }
 
