@@ -1,25 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import 'boxicons/css/boxicons.min.css';
 import Account from '../componant/Account';
+import './Nav.css';  // Import your CSS file
 
 const Nav = () => {
   const { user } = useContext(UserContext);
   const [scrollingUp, setScrollingUp] = useState(true);
-  let lastScrollTop = 0;
+  const lastScrollTop = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > lastScrollTop) {
+      if (scrollTop > lastScrollTop.current) {
         // Scroll down
         setScrollingUp(false);
       } else {
         // Scroll up
         setScrollingUp(true);
       }
-      lastScrollTop = scrollTop;
+      lastScrollTop.current = scrollTop;
     };
 
     window.addEventListener('scroll', handleScroll);
