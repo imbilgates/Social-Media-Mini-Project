@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import 'boxicons/css/boxicons.min.css';
 import Account from '../componant/Account';
-import './Nav.css';  // Import your CSS file
 
 const Nav = () => {
   const { user } = useContext(UserContext);
