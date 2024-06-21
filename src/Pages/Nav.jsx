@@ -11,7 +11,7 @@ const Nav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop = document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop.current) {
         // Scroll down
         setScrollingUp(false);
@@ -49,9 +49,9 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/help" className="nav-link">
+            <Link to="/chat" className="nav-link">
               <i className='bx bxs-message-dots'></i>
-              <span>Help</span>
+              <span>Chat</span>
             </Link>
           </li>
           <li className="nav-item profile">

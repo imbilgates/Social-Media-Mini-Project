@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { collection, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
@@ -23,8 +23,32 @@ export const provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
   try {
-      await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const userRef = doc(db, "users-log", user.uid);
+    await setDoc(userRef, {
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      uid: user.uid,
+      lastLogin: new Date().toISOString() 
+    }, { merge: true });
   } catch (error) {
     console.error("Error signing in with Google:", error);
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "users-log"));
+    const users = [];
+    querySnapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+    return users;
+  } catch (error) {
+    console.error("Error getting all users:", error);
+    return [];
   }
 };

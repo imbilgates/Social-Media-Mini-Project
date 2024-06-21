@@ -4,7 +4,6 @@ import { db } from '../firebase';
 import { UserContext } from '../context/UserContext';
 import Heart from "react-animated-heart";
 import Comments from '../componant/Comments';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -98,13 +97,13 @@ const Home = () => {
                       onClick={() => toggleLike(post.id)}
                       className="like-icon"
                     />
-                    {post.likes} Likes
+                     {post.likedBy?.includes(user.uid) ? `${post.likedBy?.includes(user.uid && post.uid) ?"Liked by you" : `Liked by you & ${post.likes} others`}` : post.likes + " Likes"}
                   </div>
                   <Comments
                     postId={post.id}
                     currentUser={user}
                     commentsCount={post.commentsCount}
-                    setCommentsCount={(count) =>
+                    setCommentsCount={(count) => 
                       setUsers((users) =>
                         users.map((p) => (p.id === post.id ? { ...p, commentsCount: count } : p))
                       )

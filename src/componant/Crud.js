@@ -1,21 +1,34 @@
 import { useContext, useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
-import {  db } from '../firebase';
+import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
-import { UserContext } from '../context/UserContext'
+import { UserContext } from '../context/UserContext';
 
 function Crud() {
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPost, setNewPost] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const usersCollectionRef = collection(db, "users");
 
   const navigate = useNavigate();
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setNewPost(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const createUser = async () => {
     setLoading(true);
@@ -39,25 +52,44 @@ function Crud() {
   };
 
   return (
-    <div className="app">
-      <div className="input-container">
-        <input
-          className="input-field"
-          placeholder="PostTitle..."
-          value={newPostTitle}
-          onChange={(e) => setNewPostTitle(e.target.value)}
-        />
-        <input
-          type='file'
-          className="input-field"
-          placeholder="Post..."
-          onChange={(e) => setNewPost(e.target.files[0])}
-        />
-        <button className="create-button" onClick={createUser} disabled={loading}>
-          {"Upload"}
-        </button>
+    <>
+
+      <div className="crud-app">
+        {imagePreview && (
+          <div className="crud-image-preview">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              style={{ height: '150px', width: '150px', marginBottom: '10px' }} />
+          </div>
+        )}
+        <div className="crud-input-container">
+          <input
+            className="crud-input-field"
+            placeholder="Post Title..."
+            value={newPostTitle}
+            onChange={(e) => setNewPostTitle(e.target.value)}
+          />
+          <div className="crud-file-input-container">
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="crud-file-input"
+            />
+            <div className="crud-custom-file-input">
+              {newPost ? newPost.name : "Choose File"}
+            </div>
+          </div>
+          <button
+            className="crud-create-button"
+            onClick={createUser}
+            disabled={loading}
+          >
+            {"Upload"}
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -9,7 +9,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectRoute from './ProtectRoute/ProtectRoute';
 import Nav from './Pages/Nav';
 import About from './Pages/About';
-import Help from './Pages/Help';
+import Chat from './Pages/Chat';
 import AddPost from './Pages/AddPost';
 import Search from './Pages/Search';
 import Update from './componant/Update';
@@ -54,7 +54,7 @@ function App() {
           <Route path="/crud/update/:id" element={<Update />} />
           
           <Route path="/about" element={<About />} />
-          <Route path="/help" element={<Help />} />
+          <Route path="/chat" element={<Chat />} />
         </Route>
       </Routes>
       
