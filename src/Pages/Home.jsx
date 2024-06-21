@@ -4,12 +4,27 @@ import { db } from '../firebase';
 import { UserContext } from '../context/UserContext';
 import Heart from "react-animated-heart";
 import Comments from '../componant/Comments';
+import useUsers from '../hooks/useUsers'
+import logo from '../assets/img/default-img.jpg'
 
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const { user } = useContext(UserContext);
+  const { allUsers } = useUsers();
+
+  const fetchUserPfp = (userEmail) => {
+    const user = allUsers.find(user => user.email === userEmail);
+    return user ? user.photoURL : logo;
+  };
+
+  const fetchUserName = (userEmail) => {
+    const user = allUsers.find(user => user.email === userEmail);
+    return user ? user.displayName : "users";
+  };
+
 
   const fetchUsers = async () => {
     try {
@@ -78,7 +93,14 @@ const Home = () => {
                 className="user-card"
                 key={post.id}
               >
-                <p>@{post.userName}</p>
+                <p>
+                  <img
+                    src={fetchUserPfp(post.userEmail)}
+                    alt=""
+                    className="pfp-image"
+                  />
+                  <span className="profile-name">@{fetchUserName(post.userEmail)}</span>
+                </p>
                 <img
                   src={post.post}
                   alt=""
@@ -97,13 +119,13 @@ const Home = () => {
                       onClick={() => toggleLike(post.id)}
                       className="like-icon"
                     />
-                     {post.likedBy?.includes(user.uid) ? `${post.likedBy?.includes(user.uid && post.uid) ?"Liked by you" : `Liked by you & ${post.likes} others`}` : post.likes + " Likes"}
+                    {post.likedBy?.includes(user.uid) ? `${post.likedBy?.includes(user.uid && post.uid) ? "Liked by you" : `Liked by you & ${post.likes} others`}` : post.likes + " Likes"}
                   </div>
                   <Comments
                     postId={post.id}
                     currentUser={user}
                     commentsCount={post.commentsCount}
-                    setCommentsCount={(count) => 
+                    setCommentsCount={(count) =>
                       setUsers((users) =>
                         users.map((p) => (p.id === post.id ? { ...p, commentsCount: count } : p))
                       )

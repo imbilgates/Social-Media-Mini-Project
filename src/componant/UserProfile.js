@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { auth, db, storage } from '../firebase';
-import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, where, setDoc } from 'firebase/firestore';
 import { deleteObject, ref, uploadString, getDownloadURL } from 'firebase/storage';
-import { updateProfile } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth'; // Import updateProfile from firebase/auth
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/img/default-img.jpg';
 import { UserContext } from '../context/UserContext';
@@ -60,11 +60,23 @@ const UserProfile = () => {
                     photoURL = await getDownloadURL(snapshot.ref);
                 }
 
+                // Update profile in Firebase Authentication
                 await updateProfile(auth.currentUser, {
                     displayName: username,
                     photoURL: photoURL
                 });
-                setUser({ ...user, photoURL: photoURL });
+
+                // Update profile in Firestore 'users-log' collection
+                const userRef = doc(db, "users-log", auth.currentUser.uid);
+                await setDoc(userRef, {
+                    displayName: username || "user",
+                    email: auth.currentUser.email,
+                    photoURL: photoURL || logo,
+                    uid: auth.currentUser.uid,
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+
+                setUser({ ...user, displayName: username, photoURL: photoURL });
                 console.log('Profile updated successfully');
                 setIsModalOpen(false); // Close the modal on successful update
             } else {
@@ -76,8 +88,6 @@ const UserProfile = () => {
             setError('Failed to update profile');
         }
     };
-
-
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];

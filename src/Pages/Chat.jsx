@@ -1,29 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import { getAllUsers } from "../firebase";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import useUsers from "../hooks/useUsers"; // Adjust this import according to your project structure
 
 const Help = () => {
-  const [allUsers, setAllUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const { user } = useContext(UserContext);
+  const { allUsers, loading, error } = useUsers();
 
-  useEffect(() => {
-    const fetchAllUsers = async () => {
-      const users = await getAllUsers();
-      const filteredUsers = users.filter(u => u.uid !== user.uid);
-      setAllUsers(filteredUsers);
-    };
-
-    fetchAllUsers();
-  }, [user]);
+  const filteredUsers = allUsers.filter(u => u.uid !== user.uid && u.displayName.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value);
   };
-
-  const filteredUsers = allUsers.filter(user =>
-    user.displayName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   return (
     <div className="allusers-profile">
@@ -35,6 +23,8 @@ const Help = () => {
         value={searchQuery}
         onChange={handleSearch}
       />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
       {searchQuery && (
         <ul className="allusers-list">
           {filteredUsers.length > 0 ? (
