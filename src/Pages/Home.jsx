@@ -2,10 +2,8 @@ import { collection, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore'
 import { useContext, useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { UserContext } from '../context/UserContext';
-import Heart from "react-animated-heart";
-import Comments from '../componant/Comments';
-import useUsers from '../hooks/useUsers'
-import logo from '../assets/img/default-img.jpg'
+import Post from '../componant/Post';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -13,21 +11,10 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   const { user } = useContext(UserContext);
-  const { allUsers } = useUsers();
-
-  const fetchUserPfp = (userEmail) => {
-    const user = allUsers.find(user => user.email === userEmail);
-    return user ? user.photoURL : logo;
-  };
-
-  const fetchUserName = (userEmail) => {
-    const user = allUsers.find(user => user.email === userEmail);
-    return user ? user.displayName : "users";
-  };
-
 
   const fetchUsers = async () => {
     try {
+      setLoading(true);
       const usersCollectionRef = collection(db, 'users');
       const data = await getDocs(usersCollectionRef);
       const usersWithCommentsCount = await Promise.all(data.docs.map(async (doc) => {
@@ -41,7 +28,7 @@ const Home = () => {
       console.error('Error fetching users:', err);
       setError('Failed to fetch users');
     } finally {
-      setLoading(false); // Set loading to false after data is fetched
+      setLoading(false);
     }
   };
 
@@ -79,62 +66,18 @@ const Home = () => {
   if (error) {
     return <div>{error}</div>;
   }
+
   return (
     <div className="Home">
       <div className="user-list">
         {loading ? (
-          "Loading..."
+          Array.from({ length: 5 }).map((_, index) => (
+            <Post key={index} post={{}} user={user} toggleLike={toggleLike} loading={loading} setLoading={setLoading} />
+          ))
         ) : (
-          users.map((post) => {
-            const isLiked = post.likedBy && post.likedBy.includes(user.uid);
-            return (
-              <div
-                onDoubleClick={() => toggleLike(post.id)}
-                className="user-card"
-                key={post.id}
-              >
-                <p>
-                  <img
-                    src={fetchUserPfp(post.userEmail)}
-                    alt=""
-                    className="pfp-image"
-                  />
-                  <span className="profile-name">@{fetchUserName(post.userEmail)}</span>
-                </p>
-                <img
-                  src={post.post}
-                  alt=""
-                  className="post-image"
-                  style={{ width: '100%', marginBottom: 10 }}
-                  onLoad={() => setLoading(false)}
-                />
-                <div className="post-content">
-                  <p>
-                    <b>Title: {post.postTitle}</b>
-                  </p>
-                  <div className="like-section">
-                    <Heart
-                      id={post.postId}
-                      isClick={isLiked}
-                      onClick={() => toggleLike(post.id)}
-                      className="like-icon"
-                    />
-                    {post.likedBy?.includes(user.uid) ? `${post.likedBy?.includes(user.uid && post.uid) ? "Liked by you" : `Liked by you & ${post.likes} others`}` : post.likes + " Likes"}
-                  </div>
-                  <Comments
-                    postId={post.id}
-                    currentUser={user}
-                    commentsCount={post.commentsCount}
-                    setCommentsCount={(count) =>
-                      setUsers((users) =>
-                        users.map((p) => (p.id === post.id ? { ...p, commentsCount: count } : p))
-                      )
-                    }
-                  />
-                </div>
-              </div>
-            );
-          })
+          users.map((post) => (
+            <Post key={post.id} post={post} user={user} toggleLike={toggleLike} loading={loading} setLoading={setLoading} setUsers={setUsers} />
+          ))
         )}
       </div>
     </div>

@@ -55,7 +55,7 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item profile">
-            <Account user={user} />
+            <Account />
           </li>
         </ul>
       </nav>

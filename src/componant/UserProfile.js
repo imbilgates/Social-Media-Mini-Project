@@ -12,11 +12,10 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [username, setUsername] = useState(auth.currentUser.displayName);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [previewPhoto, setPreviewPhoto] = useState(null);
 
     const navigate = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, isModalOpen, setIsModalOpen } = useContext(UserContext);
 
     const fetchUsers = async () => {
         try {
@@ -62,8 +61,8 @@ const UserProfile = () => {
 
                 // Update profile in Firebase Authentication
                 await updateProfile(auth.currentUser, {
-                    displayName: username,
-                    photoURL: photoURL
+                    displayName: username || "user",
+                    photoURL: photoURL || logo
                 });
 
                 // Update profile in Firestore 'users-log' collection
@@ -124,7 +123,7 @@ const UserProfile = () => {
                     <div className="profile-info">
                         <p className="profile-email">{auth.currentUser.email}</p>
                         <p className="profile-name">
-                            {auth.currentUser.displayName}
+                            {auth.currentUser.displayName || "user"}
                             <i className="bx bx-edit edit-icon" onClick={() => setIsModalOpen(true)}></i>
                         </p>
                     </div>
@@ -160,8 +159,8 @@ const UserProfile = () => {
                             onChange={handleFileChange}
                         />
                         <input
-                            placeholder="type your @username.."
-                            value={username}
+                            placeholder="edit your @username.."
+                            value={username || "user"}
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <button className='submit' onClick={handleSubmit}>Submit</button>
