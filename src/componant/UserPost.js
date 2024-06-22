@@ -20,6 +20,7 @@ const UserPost = () => {
     const email = user ? user.email : null;
 
     useEffect(() => {
+        if (!user) return;
         if (user) {
             setUsersProfileName(user.displayName);
             setUsersProfileImg(user.photoURL);
@@ -44,7 +45,7 @@ const UserPost = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [email, fetchUsers]); // Depend on email and id to trigger fetchUsers\
+    }, [email]); 
 
 
 
