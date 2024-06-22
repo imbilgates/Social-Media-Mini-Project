@@ -20,32 +20,33 @@ const UserPost = () => {
     const email = user ? user.email : null;
 
     useEffect(() => {
-        if (!user) return;
-        if (user) {
+        const fetchUserData = async () => {
+            if (!user) return;
+    
+            // Set user profile name and image
             setUsersProfileName(user.displayName);
             setUsersProfileImg(user.photoURL);
-        }
+    
+            // Fetch user posts based on email
+            if (user.email) {
+                try {
+                    const usersCollectionRef = collection(db, 'users');
+                    const userQuery = query(usersCollectionRef, where("userEmail", "==", user.email));
+                    const data = await getDocs(userQuery);
+                    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+                } catch (err) {
+                    console.error('Error fetching users:', err);
+                    setError('Failed to fetch users');
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+    
+        fetchUserData();
     }, [user]);
-
-
-    const fetchUsers = async () => {
-        if (!email) return; // Skip if email is not found
-        try {
-            const usersCollectionRef = collection(db, 'users');
-            const userQuery = query(usersCollectionRef, where("userEmail", "==", email));
-            const data = await getDocs(userQuery);
-            setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        } catch (err) {
-            console.error('Error fetching users:', err);
-            setError('Failed to fetch users');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, [email]); 
+    
+    
 
 
 
