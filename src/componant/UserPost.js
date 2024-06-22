@@ -5,8 +5,8 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 
 const UserPost = () => {
-    const [UsersProfileImg, setUsersProfileImg] = useState(null)
-    const [UsersProfileName, setUsersProfileName] = useState(null)
+    const [UsersProfileImg, setUsersProfileImg] = useState(null);
+    const [UsersProfileName, setUsersProfileName] = useState(null);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [follow, setFollow] = useState(null);
@@ -17,16 +17,15 @@ const UserPost = () => {
 
     // Find the email associated with the user id
     const user = allUsers.find(u => u.uid === id);
-    const email = user ? user.email : null;
 
     useEffect(() => {
         const fetchUserData = async () => {
             if (!user) return;
-    
+
             // Set user profile name and image
             setUsersProfileName(user.displayName);
             setUsersProfileImg(user.photoURL);
-    
+
             // Fetch user posts based on email
             if (user.email) {
                 try {
@@ -42,13 +41,9 @@ const UserPost = () => {
                 }
             }
         };
-    
+
         fetchUserData();
     }, [user]);
-    
-    
-
-
 
     if (loading) {
         return <div>Loading...</div>;
@@ -57,8 +52,6 @@ const UserPost = () => {
     if (error) {
         return <div>{error}</div>;
     }
-
-
 
     return (
         <>
@@ -80,10 +73,7 @@ const UserPost = () => {
                 </div>
             </div>
 
-
-
             {!users.length && <div className="Home">No posts available</div>}
-
 
             {users.map((post) => (
                 <div className="user-post-card" key={post.id}>
@@ -94,7 +84,6 @@ const UserPost = () => {
                 </div>
             ))}
         </>
-
     );
 };
 
