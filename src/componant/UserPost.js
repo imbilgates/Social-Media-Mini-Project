@@ -44,7 +44,7 @@ const UserPost = () => {
 
     useEffect(() => {
         fetchUsers();
-    }, [email]); // Depend on email and id to trigger fetchUsers\
+    }, [email, fetchUsers]); // Depend on email and id to trigger fetchUsers\
 
 
 
