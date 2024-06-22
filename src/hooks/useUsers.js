@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
-import { db } from '../firebase'; // Make sure to adjust the import path according to your project structure
+import { db } from '../firebase'; 
 
 const useUsers = () => {
   const [allUsers, setAllUsers] = useState([]);

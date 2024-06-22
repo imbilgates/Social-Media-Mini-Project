@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import useUsers from "../hooks/useUsers"; // Adjust this import according to your project structure
+import useUsers from "../hooks/useUsers"; 
+import { Link } from "react-router-dom";
 
 const Help = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,6 +14,8 @@ const Help = () => {
     setSearchQuery(event.target.value);
   };
 
+  if(loading) return <div className="Home">Loading...</div>;
+
   return (
     <div className="allusers-profile">
       <h2>Search Users</h2>
@@ -23,23 +26,20 @@ const Help = () => {
         value={searchQuery}
         onChange={handleSearch}
       />
-      {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {searchQuery && (
         <ul className="allusers-list">
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
-              <li key={user.uid} className="allusers-list-item">
+              <Link to={`/chat/userPost/${user.uid}`} style={{textDecoration: "none"}}><li key={user.uid} className="allusers-list-item">
                 <img src={user.photoURL} alt="" />
                 <span>{user.displayName}</span>
                 <span className="last-seen">Active Log <b>{formatLastLogin(user.lastLogin)}</b></span>
-              </li>
+              </li></Link>
             ))
           ) : (
             <li><b>No users found</b></li>
           )}
         </ul>
-      )}
     </div>
   );
 };

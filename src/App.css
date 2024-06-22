@@ -744,7 +744,7 @@
 
 /* Nav.css */
 .nav {
-  background-color: #28f0aa;
+  background-color: #00ffaa; /* Adjust the alpha (last value) for transparency */
   color: #fff;
   padding: 30px 20px;
   width: 100%;
@@ -758,9 +758,7 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.nav.hidden {
-  transform: translateY(-100%);
-}
+/* Remove the .nav.hidden styles to keep it simple */
 
 .nav-list {
   list-style-type: none;
@@ -1014,6 +1012,83 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+
+.user-post-card {
+  max-width: 70%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.user-post-image-wrapper {
+  position: relative;
+  overflow: hidden; /* Clip the image to fit the border radius */
+}
+
+.user-post-image {
+  width: 100%;
+  height: auto;
+  display: flex;
+  object-fit: cover; /* Ensure the image covers the container */
+}
+
+.user-post-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.user-post-image-wrapper:hover .user-post-caption {
+  opacity: 1;
+}
+
+/* insta folllow btn css */
+
+.instagram-follow-button {
+  background-color: #3897f0;
+  border: 1px solid #3897f0;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.instagram-following-button{
+  background-color: #2f3439;
+  border: 1px solid #2f3439;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.instagram-follow-button:hover {
+  background-color: #318ae8;
+  border-color: #318ae8;
+}
+
+.instagram-follow-button:active {
+  background-color: #2b7ed8;
+  border-color: #2b7ed8;
+}
+
+/*  */
 
 
 

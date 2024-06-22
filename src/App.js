@@ -13,15 +13,14 @@ import Search from './Pages/Search';
 import Update from './componant/Update';
 import { UserContext } from './context/UserContext'; 
 import UserProfile from './componant/UserProfile';
+import UserPost from './componant/UserPost';
 
 
 function App() {
 
     const { user, loading } = useContext(UserContext);
   
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    if (loading) return ;
   
     return (
       <>
@@ -38,6 +37,7 @@ function App() {
             <Route path="/crud/update/:id" element={<Update />} />
             <Route path="/about" element={<About />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="chat/userPost/:id" element={<UserPost />} />
           </Route>
         </Routes>
       </>

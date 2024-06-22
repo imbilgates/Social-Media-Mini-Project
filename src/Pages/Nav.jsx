@@ -31,8 +31,8 @@ const Nav = () => {
           </li>
           <li className="nav-item">
             <Link to="/chat" className="nav-link">
-              <i className='bx bxs-message-dots'></i>
-              <span>Chat</span>
+              <i className='bx bxs-search'></i>
+              <span>Users</span>
             </Link>
           </li>
           <li className="nav-item profile">
