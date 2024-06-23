@@ -24,7 +24,7 @@ const useUsers = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [allUsers]);
 
   return { allUsers, loading, error };
 };

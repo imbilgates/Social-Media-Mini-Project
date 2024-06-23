@@ -962,6 +962,23 @@
   margin-top: 30px;
 
 }
+.online-icon {
+  border: 3px solid rgb(54, 237, 54); /* Green border for online */
+  border-radius: 50%; /* Make the border circular */
+}
+
+.offline-icon {
+  border: 2px solid red; /* Red border for offline */
+  border-radius: 50%; /* Make the border circular */
+}
+
+/* Optionally, adjust the size of the image */
+.user-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover; /* Ensures the image fits within the border */
+}
+
 
 .search-box {
   width: 100%;

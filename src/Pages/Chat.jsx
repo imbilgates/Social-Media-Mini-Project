@@ -31,9 +31,10 @@ const Help = () => {
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
               <Link to={`/chat/userPost/${user.uid}`} style={{textDecoration: "none"}}><li key={user.uid} className="allusers-list-item">
-                <img src={user.photoURL} alt="" />
+                <img src={user.photoURL} alt="" className={user?.status === "online" ? "online-icon" : "offline-icon"}/>
                 <span>{user.displayName}</span>
-                <span className="last-seen">Active Log <b>{formatLastLogin(user.lastLogin)}</b></span>
+                {user?.status === "offline" ? <span className="last-seen">Active Log <b>{formatLastLogin(user.lastLogin)}</b></span> :
+                <span>{user?.status}</span> }
               </li></Link>
             ))
           ) : (
