@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, runTransaction } from 'firebase/firestore';
-import logo from '../assets/img/default-img.jpg'
+import logo from '../assets/img/default-img.jpg';
 
 export const UserContext = createContext();
 
@@ -11,7 +11,6 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Update status to "online" or "offline"
     const updateStatus = async (currentUser, status) => {
         if (currentUser) {
             const userRef = doc(db, "users-log", currentUser.uid);
@@ -21,10 +20,23 @@ export const UserProvider = ({ children }) => {
                     email: currentUser.email,
                     photoURL: currentUser.photoURL || logo,
                     uid: currentUser.uid,
-                    status: status, // Set status to "online" or "offline"
+                    status: status,
                     lastLogin: new Date().toISOString(),
                 }, { merge: true });
             });
+        }
+    };
+
+    const updateStatusSync = (currentUser, status) => {
+        if (currentUser) {
+            const url = `${process.env.REACT_APP_FIREBASE_FUNCTION_URL}/updateStatus`;
+            const data = JSON.stringify({
+                uid: currentUser.uid,
+                status: status,
+                lastLogin: new Date().toISOString()
+            });
+
+            navigator.sendBeacon(url, data);
         }
     };
 
@@ -53,7 +65,7 @@ export const UserProvider = ({ children }) => {
 
         const handleBeforeUnload = () => {
             if (user) {
-                updateStatus(user, 'offline');
+                updateStatusSync(user, 'offline');
             }
         };
 
